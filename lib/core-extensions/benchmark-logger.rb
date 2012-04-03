@@ -18,7 +18,7 @@ class Logger
     r = yield(benchmarker)
     
     runtime = benchmarker.runtime
-    LOGGER.warn "#{benchmarker.msg}: #{(runtime * 1000).to_i} msecs" if runtime > (opts[:minimum] || -1)
+    warn "#{benchmarker.msg}: #{(runtime * 1000).to_i} msecs" if runtime > (opts[:minimum] || -1)
     r
   end
 end
