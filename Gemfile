@@ -14,6 +14,12 @@ gem "htmlentities"
 group :development do
   gem "bundler"
   gem "jeweler"
+  
+  # vcr stuff: this needs psych or else will crash
+  gem "vcr"
+  gem "webmock"
+  gem "psych"
+  
   gem 'simplecov', :require => false
   gem "ruby-debug19"
 end
