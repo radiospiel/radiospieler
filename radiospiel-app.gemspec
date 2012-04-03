@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "radiospiel-app"
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["radiospiel"]
@@ -42,13 +42,16 @@ Gem::Specification.new do |s|
     "lib/core-extensions/uids.rb",
     "lib/extensions/http.rb",
     "lib/extensions/zz_geocoder.rb",
+    "radiospiel-app.gemspec",
     "script/watchr",
     "test/app_test.rb",
     "test/cache_test.rb",
     "test/cgi_ext_test.rb",
     "test/config.yml",
     "test/config_test.rb",
+    "test/fixtures-vcr/http_test.yml",
     "test/helper.rb",
+    "test/http_test.rb",
     "test/string_ext_test.rb",
     "test/tls_test.rb",
     "test/uid_test.rb"
@@ -70,6 +73,9 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<htmlentities>, [">= 0"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
+      s.add_development_dependency(%q<vcr>, [">= 0"])
+      s.add_development_dependency(%q<webmock>, [">= 0"])
+      s.add_development_dependency(%q<psych>, [">= 0"])
       s.add_development_dependency(%q<simplecov>, [">= 0"])
       s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
     else
@@ -80,6 +86,9 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<htmlentities>, [">= 0"])
       s.add_dependency(%q<bundler>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
+      s.add_dependency(%q<vcr>, [">= 0"])
+      s.add_dependency(%q<webmock>, [">= 0"])
+      s.add_dependency(%q<psych>, [">= 0"])
       s.add_dependency(%q<simplecov>, [">= 0"])
       s.add_dependency(%q<ruby-debug19>, [">= 0"])
     end
@@ -91,6 +100,9 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<htmlentities>, [">= 0"])
     s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
+    s.add_dependency(%q<vcr>, [">= 0"])
+    s.add_dependency(%q<webmock>, [">= 0"])
+    s.add_dependency(%q<psych>, [">= 0"])
     s.add_dependency(%q<simplecov>, [">= 0"])
     s.add_dependency(%q<ruby-debug19>, [">= 0"])
   end
