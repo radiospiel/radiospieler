@@ -6,5 +6,8 @@ class TestConfig < Test::Unit::TestCase
   
     expected = {"abc"=>"def", "dummy"=>"dummy"}
     assert_equal(expected, App.config)
+
+    assert_equal("def", App.config[:abc])
+    assert_equal("def", App.config["abc"])
   end
 end

@@ -35,6 +35,17 @@ module App
         default_settings = config["default"] || {}
         current_settings = config[App.env] || {}
         default_settings.update current_settings
+      end.extend(TreatSymbolsAsStrings)
+    end
+    
+    module TreatSymbolsAsStrings
+      def [](key)
+        fetch(key) do
+          case key
+          when Symbol then fetch(key.to_s, nil)
+          when String then fetch(key.to_sym, nil)
+          end
+        end
       end
     end
   end
