@@ -5,6 +5,7 @@ source "http://rubygems.org"
 
 gem "pg"
 gem "sqlite3"
+gem "redis"
 gem "micro_sql"
 gem "htmlentities"
 

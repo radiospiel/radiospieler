@@ -7,10 +7,11 @@ require_relative "config"
 # Entries are packed via Marshal.
 module App
   module Cache
-    DEFAULT_MAX_AGE = 5 * 24 * 3600     # 5 days.
+    DEFAULT_MAX_AGE = 4 * 3600     # 4 hours.
 
     attr :store, true
-
+    extend self
+    
     def self.clear
       store.flushdb
     end
@@ -24,27 +25,30 @@ module App
       else
         yield.tap { |v| 
           store.set(key, Marshal.dump(v)) 
-          store.expire(key, ttl)
+          store.expire(key, max_age)
         }
       end
     end
 
     def self.setup
-      unless cache_url = App.config[:cache]
+      if !(cache_url = App.config[:cache])
         App.logger.warn "No :cache configuration"
-        return
+      elsif !(self.store = connect_to_redis(cache_url))
+        App.logger.warn "Using cache at #{cache_url}"
       end
-      
-      App.logger.warn "Using cache at #{cache_url}"
-
+    end
+    
+    def self.connect_to_redis(url)
       require "redis"
-
-      self.store = Redis.connect(cache_url)
+      Redis.connect(:url => url)
+    rescue LoadError
+      App.logger.warn "Cannot load 'redis' gem (connecting to #{url})"
+      nil
     end
   end
 
-  def cached(key, max_age = DEFAULT_MAX_AGE, &block)
-    App::Cache.cached(key, max_age, &block)
+  def cached(key, max_age = Cache::DEFAULT_MAX_AGE, &block)
+    Cache.cached(key, max_age, &block)
   end
 end
 
