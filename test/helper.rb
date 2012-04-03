@@ -21,7 +21,8 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'app'
 App.env = "test"
 
-MicroSql.logger.level = Logger::WARN
+App.logger.level = Logger::ERROR
+MicroSql.logger = App.logger
 
 class Test::Unit::TestCase
 end
