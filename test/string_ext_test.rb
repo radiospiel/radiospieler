@@ -12,4 +12,15 @@ class StringExtTest < Test::Unit::TestCase
     assert_equal("actual", "actual".sortkey)
     assert_equal("schreck003012", "der schreck 3/12".sortkey)
   end
+
+  def test_starts_ends_with
+    s = "foo bar baz"
+    assert s.starts_with?("foo")
+    assert !s.starts_with?("baz")
+    assert !s.ends_with?("foo")
+    assert s.ends_with?("baz")
+
+    assert s.starts_with?("")
+    assert s.ends_with?("")
+  end
 end

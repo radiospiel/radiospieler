@@ -48,3 +48,12 @@ class String
   end
 end
 
+class String
+  def starts_with?(other)
+    length >= other.length && self[0, other.length] == other
+  end
+
+  def ends_with?(other)
+    length >= other.length && self[length - other.length .. -1] == other
+  end
+end
