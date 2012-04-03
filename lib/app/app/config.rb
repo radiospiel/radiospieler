@@ -5,18 +5,32 @@ require "yaml"
 
 module App
   module Config
-    def self.path
-      "#{App.root}/config/app.yml"
+    def self.paths
+      [ "#{App.root}/config/app.yml", "#{App.root}/config.yml" ]
+    end
+
+    def self.read(path)
+      return unless File.exist?(path)
+      App.logger.info "Reading configuration from #{path}"
+      yaml = File.read(path)
+      YAML.load(yaml) || {}
     end
     
     def self.load
-      YAML.load File.read(path)
-    rescue Errno::ENOENT
-      App.logger.warn "No configuration found in #{path}"
+      config = paths.inject(nil) do |c, path|
+        c || read(path)
+      end
+
+      config ||= begin
+        App.logger.warn "No configuration found in #{App.root}"
+        {}
+      end
     end
+
+    @@configurations = {}
     
     def self.current
-      @current ||= begin
+      @@configurations[App.root] ||= begin
         config = self.load
         default_settings = config["default"] || {}
         current_settings = config[App.env] || {}

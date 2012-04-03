@@ -1,6 +1,6 @@
 require 'helper'
 
-class TestMicroSql < Test::Unit::TestCase
+class TestApp < Test::Unit::TestCase
   def test_root
     expected = File.expand_path("#{File.dirname(__FILE__)}/..")
     
@@ -8,8 +8,11 @@ class TestMicroSql < Test::Unit::TestCase
     assert_equal expected, App::Root.find
     assert_equal expected, App.root
 
-    App.root = "expected"
-    assert_equal "expected", App.root
+    App.root = "foo"
+    assert_equal "foo", App.root
+
+    App.root = nil
+    assert_equal expected, App.root
   end
 
   def test_object_attributes

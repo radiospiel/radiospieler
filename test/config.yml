@@ -1,0 +1,7 @@
+default:
+  abc: "abc"
+  dummy: "dummy"
+
+test:
+  abc: "def"
+

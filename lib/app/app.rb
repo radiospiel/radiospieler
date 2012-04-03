@@ -1,8 +1,10 @@
 module App
   extend self
 
+  attr :env, true
+
   def env
-    ENV["RACK_ENV"] || ENV["RAILS_ENV"] || "development"
+    @env ||= ENV["RACK_ENV"] || ENV["RAILS_ENV"] || "development"
   end
 end
 
