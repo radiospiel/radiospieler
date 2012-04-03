@@ -1,7 +1,8 @@
 require "digest/md5"
+require "forwardable"
 
 class String
-  def to_crc32
+  def crc32
     Zlib.crc32(self)
   end
 
@@ -9,13 +10,17 @@ class String
     Digest::MD5.hexdigest(self)
   end
 
-  def to_uid
+  # return a 64 bit uid
+  def uid64
     md5.unpack("LL").inject { |a,b| (a << 31) + b }
   end
 end
 
 class Hash
-  def to_uid
-    map { |k,v| "#{k.inspect}:#{v.inspect}" }.sort.join("//").to_uid
+  extend Forwardable
+  delegate [:uid64, :crc32, :md5] => :calculate_stable_hashable
+  
+  def calculate_stable_hashable
+    map { |k,v| "#{k.inspect}:#{v.inspect}" }.sort.join("//")
   end
 end

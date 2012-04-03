@@ -17,9 +17,6 @@ module App
       File.exists?("#{dir}/config.ru") || 
       File.exists?("#{dir}/Gemfile") ||
       File.exists?("#{dir}/Procfile")
-    rescue
-      puts "****** Ha! #{$!.inspect}"
-      raise
     end
     
     def self.find

@@ -3,10 +3,14 @@ require "htmlentities"
 # -- decode HTML entities -----------------------------------------------------
 
 class String
-  @@htmldecoder = HTMLEntities.new
+  module HtmlDecoder
+    def self.instance
+      @htmldecoder ||= HTMLEntities.new
+    end
+  end
 
-  def decode_html_entities
-    @@htmldecoder.decode self
+  def unhtml
+    HtmlDecoder.instance.decode self
   end
 end
 
@@ -27,20 +31,20 @@ end
 
 # -- remove accents -----------------------------------------------------------
 
-require_relative "./without_accents"
+require_relative "./string_without_accents"
 
 class String
   include WithoutAccents
+end
 
+class String
   def sortkey
     # Convert the key into an sortable ascii string
     self.without_accents.                               # remove accents
       downcase.
       gsub(/^\s*(der|die|das|the|a|ein)\b\s*/, "").     # remove leading stop words
-      gsub(/[^a-z0-9]/, "").                            # keep only letters and digits
-      gsub(/[0-9]+/) { |s| 
-        9 > s.length ? s : "0" * (9 - s.length)
-      }                            # keep only letters and digits
+      gsub(/[0-9]+/) { |s| "%03d" % s.to_i }.           # fill in leading zeroes
+      gsub(/[^a-z0-9]/, "")                             # keep only letters and digits
   end
 end
 
