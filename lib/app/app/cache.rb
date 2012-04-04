@@ -8,15 +8,28 @@ require_relative "config"
 module App
   module Cache
     class SqliteStore < MicroSql::KeyValueTable
-      def initialize(path)
-        FileUtils.mkdir_p "#{Dir.home}/cache/"
-        @db = MicroSql.create("#{Dir.home}/cache/#{File.basename(path)}.sqlite3")
+      def self.db_path
+        @db_path ||= begin
+          path = "#{Dir.home}/cache/#{File.basename(App.root)}/#{App.root.uid64}.sqlite3"
+          FileUtils.mkdir_p File.dirname(path)
+          path
+        end
+      end
+
+      def initialize
+        @db = MicroSql.create(SqliteStore.db_path)
         super @db, "cache"
       end
 
-      alias :get :[]
-      alias :set :update
-
+      def get(key)
+        encoded = self[key]
+        Base64.decode64(encoded) if encoded
+      end 
+      
+      def set(key, value)
+        update key, Base64.encode64(value)
+      end
+      
       def expire(key, max_age)
         ttl = max_age + Time.now.to_i if max_age
         @db.ask("UPDATE cache SET ttl=? WHERE uid=?", ttl, key)
@@ -52,8 +65,8 @@ module App
 
     def self.setup
       cache_url = App.config[:cache] || begin
-        App.logger.warn "No :cache configuration, fallback to ~/cache/radiospiel.sqlite3"
-        "#{Dir.home}/cache/radiospiel.sqlite3"
+        App.logger.warn "No :cache configuration, fallback to #{SqliteStore.db_path}"
+        SqliteStore.db_path
       end
       
       uri = URI.parse(cache_url)
@@ -63,7 +76,7 @@ module App
         require "redis"
         Redis.connect(:url => cache_url)
       when nil
-        SqliteStore.new(uri.path)
+        SqliteStore.new
       end
     rescue LoadError
       App.logger.warn "LoadError: #{$!}"
