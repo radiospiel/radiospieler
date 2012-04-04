@@ -9,7 +9,7 @@ class Hash
 
   def symbolize_keys
     r = []
-    each { |k,v| r << k.to_sym << v }
+    each { |k,v| r << (k.respond_to?(:to_sym) ? k.to_sym : k) << v }
     Hash[*r]
   end
 end
