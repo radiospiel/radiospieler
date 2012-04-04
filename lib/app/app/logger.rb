@@ -5,8 +5,20 @@ module App
     @logger
   end
 
+  INTENDATIONS = {
+    "DEBUG" => '        ',
+    "INFO"  => '      **',
+    "WARN"  => '    ****',
+    "ERROR" => '  ******',
+    "FATAL" => '********'
+  }
+
   def self.logger=(logger)
-    logger.formatter = proc { |_, _, _, msg| "*** #{msg}\n" }
+    logger.formatter = proc do |severity, datetime, progname, msg| 
+      intend = INTENDATIONS[severity] || INTENDATIONS["FATAL"]
+      "#{intend} #{msg}\n" 
+    end
+
     @logger = logger
   end
 end
