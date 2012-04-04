@@ -9,10 +9,22 @@ module Http
   extend self
 
   # the default expiration time for get requests.
-  attr :max_age
+  module MaxAge
+    def self.config
+      @config ||= (App.config["cache-max-age"] || {}).to_a
+    end
+    
+    def self.for(url)
+      config.each do |pattern, max_age|
+        return max_age if url.index(pattern)
+      end
+      nil
+    end
+  end
   
-  def get(url, max_age = self.max_age)
+  def get(url, max_age = MaxAge.for(url))
     App.logger.benchmark("[GET] #{url}", :minimum => 20) do 
+      App.logger.debug "[GET] #{url}"
       App.cached(url, max_age) do get_(url) end
     end
   end
