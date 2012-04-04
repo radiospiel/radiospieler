@@ -2,6 +2,7 @@ require_relative "root"
 require_relative "logger"
 
 require "yaml"
+require "erb"
 
 module App
   module Config
