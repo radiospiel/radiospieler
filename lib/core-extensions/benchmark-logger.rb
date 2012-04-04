@@ -22,7 +22,7 @@ class Logger
   def benchmark(msg = "Benchmark", opts = {}, &block)
     benchmarker = Benchmarker.new(msg, opts[:severity] || :warn)
     yield(benchmarker).tap do
-      self.send(benchmarker.severity, benchmarker) if benchmarker.runtime > (opts[:minimum] || -1)
+      self.send(benchmarker.severity, benchmarker.to_s) if benchmarker.runtime > (opts[:minimum] || -1)
     end
   rescue
     warn "FAIL #{benchmarker}"
