@@ -1,7 +1,8 @@
 default:
   abc: "abc"
   dummy: "dummy"
-
+  erbed: <%= "test" %>
+  
 test:
   abc: "def"
 
