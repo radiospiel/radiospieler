@@ -10,7 +10,7 @@ module App
     class SqliteStore < MicroSql::KeyValueTable
       def self.db_path
         @db_path ||= begin
-          path = "#{Dir.home}/cache/#{File.basename(App.root)}/#{App.root.uid64}.sqlite3"
+          path = "#{Dir.home}/cache/#{File.basename(App.root)}/a#{App.root.uid64}.sqlite3"
           FileUtils.mkdir_p File.dirname(path)
           path
         end
@@ -20,24 +20,10 @@ module App
         @db = MicroSql.create(SqliteStore.db_path)
         super @db, "cache"
       end
-
-      def get(key)
-        encoded = self[key]
-        Base64.decode64(encoded) if encoded
-      end 
       
-      def set(key, value)
-        update key, Base64.encode64(value)
-      end
-      
-      def expire(key, max_age)
-        ttl = max_age + Time.now.to_i if max_age
-        @db.ask("UPDATE cache SET ttl=? WHERE uid=?", ttl, key)
-      end
-      
-      def flushdb
-        @db.exec "DELETE FROM cache"
-      end
+      alias :get :[]
+      alias :set :update
+      alias :flushdb :delete_all
     end
     
     DEFAULT_MAX_AGE = 4 * 3600     # 4 hours.
@@ -49,20 +35,39 @@ module App
       store.flushdb
     end
 
+    def self.uid(key)
+      case key
+      when String, Hash then key.uid64
+      when Fixnum       then key
+      else
+        App.logger.warn "Don't know how to deal with non-uid key #{key}"
+        nil
+      end 
+    end
+    
     def self.cached(key, max_age = DEFAULT_MAX_AGE, &block)
-      redis = App::Cache.store
-      return yield if !store || !max_age
+      cache_id = uid(key)
 
-      if marshalled = store.get(key)
-        Marshal.load(marshalled)
+      return yield if !store || !max_age || !cache_id
+
+      if marshalled = store.get(cache_id)
+        unmarshal(marshalled)
       else
         yield.tap { |v| 
-          store.set(key, Marshal.dump(v)) 
-          store.expire(key, max_age)
+          store.set(cache_id, marshal(v))
+          store.expire(cache_id, max_age)
         }
       end
     end
 
+    def self.unmarshal(marshalled)
+      Marshal.load Base64.decode64(marshalled) if marshalled
+    end
+    
+    def self.marshal(value)
+      Base64.encode64 Marshal.dump(value)
+    end
+    
     def self.setup
       cache_url = App.config[:cache] || begin
         App.logger.warn "No :cache configuration, fallback to #{SqliteStore.db_path}"
