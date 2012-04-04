@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "radiospiel-app"
-  s.version = "0.2.2"
+  s.version = "0.2.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["radiospiel"]
@@ -52,7 +52,10 @@ Gem::Specification.new do |s|
     "test/cgi_ext_test.rb",
     "test/config.yml",
     "test/config_test.rb",
+    "test/fixtures-vcr/geocoder.yml",
     "test/fixtures-vcr/http_test.yml",
+    "test/geocoder_test.rb",
+    "test/hash_ext_test.rb",
     "test/helper.rb",
     "test/http_test.rb",
     "test/string_ext_test.rb",
