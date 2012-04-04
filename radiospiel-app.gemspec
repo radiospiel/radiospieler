@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "radiospiel-app"
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["radiospiel"]
-  s.date = "2012-04-03"
+  s.date = "2012-04-04"
   s.description = "Some basics that your application could benefit from."
   s.email = "eno@open-lab.org"
   s.extra_rdoc_files = [
@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
     "lib/app/app/config.rb",
     "lib/app/app/logger.rb",
     "lib/app/app/root.rb",
+    "lib/core-extensions/array_ext.rb",
     "lib/core-extensions/benchmark-logger.rb",
     "lib/core-extensions/cgi_ext.rb",
     "lib/core-extensions/hash_ext.rb",
@@ -46,6 +47,7 @@ Gem::Specification.new do |s|
     "radiospiel-app.gemspec",
     "script/watchr",
     "test/app_test.rb",
+    "test/array_ext_test.rb",
     "test/cache_test.rb",
     "test/cgi_ext_test.rb",
     "test/config.yml",
