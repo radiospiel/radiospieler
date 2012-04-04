@@ -7,6 +7,26 @@ require_relative "config"
 # Entries are packed via Marshal.
 module App
   module Cache
+    class SqliteStore < MicroSql::KeyValueTable
+      def initialize(path)
+        FileUtils.mkdir_p "#{Dir.home}/cache/"
+        @db = MicroSql.create("#{Dir.home}/cache/#{File.basename(path)}.sqlite3")
+        super @db, "cache"
+      end
+
+      alias :get :[]
+      alias :set :update
+
+      def expire(key, max_age)
+        ttl = max_age + Time.now.to_i if max_age
+        @db.ask("UPDATE cache SET ttl=? WHERE uid=?", ttl, key)
+      end
+      
+      def flushdb
+        @db.exec "DELETE FROM cache"
+      end
+    end
+    
     DEFAULT_MAX_AGE = 4 * 3600     # 4 hours.
 
     attr :store, true
@@ -31,18 +51,22 @@ module App
     end
 
     def self.setup
-      if !(cache_url = App.config[:cache])
-        App.logger.warn "No :cache configuration"
-      elsif !(self.store = connect_to_redis(cache_url))
-        App.logger.warn "Using cache at #{cache_url}"
+      cache_url = App.config[:cache] || begin
+        App.logger.warn "No :cache configuration, fallback to ~/cache/radiospiel.sqlite3"
+        "#{Dir.home}/cache/radiospiel.sqlite3"
       end
-    end
-    
-    def self.connect_to_redis(url)
-      require "redis"
-      Redis.connect(:url => url)
+      
+      uri = URI.parse(cache_url)
+
+      self.store = case uri.scheme
+      when "redis"
+        require "redis"
+        Redis.connect(:url => cache_url)
+      when nil
+        SqliteStore.new(uri.path)
+      end
     rescue LoadError
-      App.logger.warn "Cannot load 'redis' gem (connecting to #{url})"
+      App.logger.warn "LoadError: #{$!}"
       nil
     end
   end
