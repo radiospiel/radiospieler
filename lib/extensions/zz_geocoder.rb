@@ -22,7 +22,7 @@ module Geocoder
 
     status = data["Status"]
     if status["code"] != 200
-      LOGGER.warn "Geocoding failed for '#{address}' with status #{status["code"]}"
+      STDERR.puts "Geocoding failed for '#{address}' with status #{status["code"]}"
       return
     end
     
