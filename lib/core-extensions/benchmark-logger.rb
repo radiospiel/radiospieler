@@ -3,9 +3,11 @@ require "logger"
 class Logger
   class Benchmarker
     attr :msg, true
+    attr :severity, true
     
-    def initialize(msg)
+    def initialize(msg, severity = :warn)
       @msg, @start = msg, Time.now
+      @severity = severity
     end
     
     def runtime
@@ -14,11 +16,16 @@ class Logger
   end
   
   def benchmark(msg = "Benchmark", opts = {}, &block)
-    benchmarker = Benchmarker.new(msg)
+    benchmarker = Benchmarker.new(msg, opts[:severity] || :warn)
     r = yield(benchmarker)
     
     runtime = benchmarker.runtime
-    warn "#{benchmarker.msg}: #{(runtime * 1000).to_i} msecs" if runtime > (opts[:minimum] || -1)
+    if runtime > (opts[:minimum] || -1)
+      self.send benchmarker.severity, "#{benchmarker.msg}: #{(runtime * 1000).to_i} msecs" 
+    end
     r
+  rescue
+    warn "FAIL #{benchmarker.msg}: #{(runtime * 1000).to_i} msecs" 
+    raise
   end
 end
