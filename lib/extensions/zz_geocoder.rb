@@ -6,7 +6,8 @@ require "micro_sql"
 module Geocoder
   extend self
   
-  TIME_TO_LIVE = 3600
+  # 30 days
+  TIME_TO_LIVE = 30 * 24 * 3600
   
   def geocode(address)
     Geocoder.cached(address) { __geocode__(address) }

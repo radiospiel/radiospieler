@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://maps.google.com/maps/geo?oe=utf-8&output=json&q=Berlin
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - !binary |-
+        dGV4dC9qYXZhc2NyaXB0OyBjaGFyc2V0PVVURi04
+      !binary "VmFyeQ==":
+      - !binary |-
+        QWNjZXB0LUxhbmd1YWdl
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAwNCBBcHIgMjAxMiAxNToxMTo0MyBHTVQ=
+      !binary "U2VydmVy":
+      - !binary |-
+        bWFmZQ==
+      Cache-Control:
+      - !binary |-
+        cHJpdmF0ZQ==
+      X-Xss-Protection:
+      - !binary |-
+        MTsgbW9kZT1ibG9jaw==
+      X-Frame-Options:
+      - !binary |-
+        U0FNRU9SSUdJTg==
+      Transfer-Encoding:
+      - !binary |-
+        Y2h1bmtlZA==
+    body:
+      encoding: US-ASCII
+      string: ! "{\n  \"name\": \"Berlin\",\n  \"Status\": {\n    \"code\": 200,\n
+        \   \"request\": \"geocode\"\n  },\n  \"Placemark\": [ {\n    \"id\": \"p1\",\n
+        \   \"address\": \"Berlin, Germany\",\n    \"AddressDetails\": {\n   \"Accuracy\"
+        : 4,\n   \"Country\" : {\n      \"AdministrativeArea\" : {\n         \"AdministrativeAreaName\"
+        : \"Berlin\",\n         \"Locality\" : {\n            \"LocalityName\" : \"Berlin\"\n
+        \        }\n      },\n      \"CountryName\" : \"Deutschland\",\n      \"CountryNameCode\"
+        : \"DE\"\n   }\n},\n    \"ExtendedData\": {\n      \"LatLonBox\": {\n        \"north\":
+        52.7409729,\n        \"south\": 52.3064887,\n        \"east\": 13.9185276,\n
+        \       \"west\": 12.8940524\n      }\n    },\n    \"Point\": {\n      \"coordinates\":
+        [ 13.4062900, 52.5242680, 0 ]\n    }\n  } ]\n}\n"
+    http_version: 
+  recorded_at: Wed, 04 Apr 2012 15:11:44 GMT
+recorded_with: VCR 2.0.1
