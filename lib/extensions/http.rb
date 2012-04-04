@@ -24,8 +24,10 @@ module Http
   
   def get(url, max_age = MaxAge.for(url))
     App.logger.benchmark("[GET] #{url}", :minimum => 20) do 
-      App.logger.debug "[GET] #{url}"
-      App.cached(url, max_age) do get_(url) end
+      App.cached(url, max_age) do 
+        App.logger.debug "[GET] #{url}"
+        get_(url) 
+      end
     end
   end
 
@@ -34,7 +36,15 @@ module Http
   def get_(uri_str, limit = 10)
     raise 'too many redirections' if limit == 0
 
-    response = Net::HTTP.get_response(URI(uri_str))
+    uri = URI.parse(uri_str)
+    
+    http = Net::HTTP.new(uri.host, uri.port)
+    if uri.scheme == "https"
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    end
+    request = Net::HTTP::Get.new(uri.request_uri)
+    response = http.request(request)
 
     case response
     when Net::HTTPSuccess then
