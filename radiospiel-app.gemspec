@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "radiospiel-app"
-  s.version = "0.2.3"
+  s.version = "0.2.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["radiospiel"]
@@ -42,16 +42,20 @@ Gem::Specification.new do |s|
     "lib/core-extensions/string_without_accents.rb",
     "lib/core-extensions/tls.rb",
     "lib/core-extensions/uids.rb",
+    "lib/extensions/bitly.rb",
     "lib/extensions/http.rb",
     "lib/extensions/zz_geocoder.rb",
     "radiospiel-app.gemspec",
     "script/watchr",
     "test/app_test.rb",
     "test/array_ext_test.rb",
+    "test/bitlify_test.rb",
     "test/cache_test.rb",
     "test/cgi_ext_test.rb",
     "test/config.yml",
     "test/config_test.rb",
+    "test/fixtures-vcr/bitly_limit_exceeded.yml",
+    "test/fixtures-vcr/bitly_ok.yml",
     "test/fixtures-vcr/geocoder.yml",
     "test/fixtures-vcr/http_test.yml",
     "test/geocoder_test.rb",
