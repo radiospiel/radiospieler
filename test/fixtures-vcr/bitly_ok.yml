@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api-ssl.bitly.com/v3/shorten?apiKey=R_0da49e0a9118ff35f52f629d2d71bf07&login=bitlyapidemo&longUrl=http://radiospiel.org/a=1%26b=2
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      !binary "U2VydmVy":
+      - !binary |-
+        bmdpbng=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAwNCBBcHIgMjAxMiAxNTo0NToyOSBHTVQ=
+      Content-Type:
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29ubmVjdGlvbg==":
+      - !binary |-
+        a2VlcC1hbGl2ZQ==
+      Mime-Version:
+      - !binary |-
+        MS4w
+      Content-Length:
+      - !binary |-
+        MTk1
+    body:
+      encoding: US-ASCII
+      string: ! '{ "status_code": 200, "status_txt": "OK", "data": { "long_url": "http:\/\/radiospiel.org\/a=1&b=2",
+        "url": "http:\/\/bit.ly\/HV7woD", "hash": "HV7woD", "global_hash": "HV7woE",
+        "new_hash": 1 } }
+
+'
+    http_version: 
+  recorded_at: Wed, 04 Apr 2012 15:45:29 GMT
+recorded_with: VCR 2.0.1

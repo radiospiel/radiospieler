@@ -5,7 +5,10 @@ class TestConfig < Test::Unit::TestCase
     App.root = File.dirname __FILE__
   
     expected = {"abc"=>"def", "dummy"=>"dummy", "erbed"=> "test" }
-    assert_equal(expected, App.config)
+
+    expected.each do |key, expected_value|
+       assert_equal(expected_value, App.config[key])
+    end
 
     assert_equal("def", App.config[:abc])
     assert_equal("def", App.config["abc"])
