@@ -13,19 +13,19 @@ class Logger
     def runtime
       Time.now - @start
     end
+    
+    def to_s
+      "#{msg}: #{(runtime * 1000).to_i} msecs" 
+    end
   end
   
   def benchmark(msg = "Benchmark", opts = {}, &block)
     benchmarker = Benchmarker.new(msg, opts[:severity] || :warn)
-    r = yield(benchmarker)
-    
-    runtime = benchmarker.runtime
-    if runtime > (opts[:minimum] || -1)
-      self.send benchmarker.severity, "#{benchmarker.msg}: #{(runtime * 1000).to_i} msecs" 
+    yield(benchmarker).tap do
+      self.send(benchmarker.severity, benchmarker) if benchmarker.runtime > (opts[:minimum] || -1)
     end
-    r
   rescue
-    warn "FAIL #{benchmarker.msg}: #{(runtime * 1000).to_i} msecs" 
+    warn "FAIL #{benchmarker}"
     raise
   end
 end
