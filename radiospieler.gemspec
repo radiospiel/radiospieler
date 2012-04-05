@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "radiospieler"
-  s.version = "0.3.0"
+  s.version = "0.3.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["radiospiel"]
@@ -44,6 +44,7 @@ Gem::Specification.new do |s|
     "lib/radiospieler/radiospieler/config.rb",
     "lib/radiospieler/radiospieler/logger.rb",
     "lib/radiospieler/radiospieler/root.rb",
+    "radiospieler.gemspec",
     "script/watchr",
     "test/app_test.rb",
     "test/array_ext_test.rb",
@@ -56,9 +57,9 @@ Gem::Specification.new do |s|
     "test/fixtures-vcr/bitly_ok.yml",
     "test/fixtures-vcr/http_test.yml",
     "test/hash_ext_test.rb",
-    "test/helper.rb",
     "test/http_test.rb",
     "test/string_ext_test.rb",
+    "test/test_helper.rb",
     "test/tls_test.rb",
     "test/uid_test.rb"
   ]
@@ -76,6 +77,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<sqlite3>, [">= 0"])
       s.add_runtime_dependency(%q<redis>, [">= 0"])
       s.add_runtime_dependency(%q<micro_sql>, [">= 0"])
+      s.add_runtime_dependency(%q<simple_cache>, [">= 0"])
       s.add_runtime_dependency(%q<htmlentities>, [">= 0"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
@@ -89,6 +91,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<sqlite3>, [">= 0"])
       s.add_dependency(%q<redis>, [">= 0"])
       s.add_dependency(%q<micro_sql>, [">= 0"])
+      s.add_dependency(%q<simple_cache>, [">= 0"])
       s.add_dependency(%q<htmlentities>, [">= 0"])
       s.add_dependency(%q<bundler>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
@@ -103,6 +106,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<sqlite3>, [">= 0"])
     s.add_dependency(%q<redis>, [">= 0"])
     s.add_dependency(%q<micro_sql>, [">= 0"])
+    s.add_dependency(%q<simple_cache>, [">= 0"])
     s.add_dependency(%q<htmlentities>, [">= 0"])
     s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
