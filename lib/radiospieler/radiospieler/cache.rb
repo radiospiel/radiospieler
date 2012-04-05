@@ -7,25 +7,6 @@ require_relative "config"
 # Entries are packed via Marshal.
 module App
   module Cache
-    class SqliteStore < MicroSql::KeyValueTable
-      def self.db_path
-        @db_path ||= begin
-          path = "#{Dir.home}/cache/#{File.basename(App.root)}/a#{App.root.uid64}.sqlite3"
-          FileUtils.mkdir_p File.dirname(path)
-          path
-        end
-      end
-
-      def initialize
-        @db = MicroSql.create(SqliteStore.db_path)
-        super @db, "cache"
-      end
-      
-      alias :get :[]
-      alias :set :update
-      alias :flushdb :delete_all
-    end
-    
     DEFAULT_MAX_AGE = 4 * 3600     # 4 hours.
 
     def self.clear

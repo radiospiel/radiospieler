@@ -14,8 +14,8 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "radiospiel-app"
-  gem.homepage = "http://github.com/radiospiel/app"
+  gem.name = "radiospieler"
+  gem.homepage = "http://github.com/radiospiel/radiospieler"
   gem.license = "MIT"
   gem.summary = %Q{Application base code}
   gem.description = %Q{Some basics that your application could benefit from.}

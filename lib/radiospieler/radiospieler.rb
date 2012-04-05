@@ -8,6 +8,6 @@ module App
   end
 end
 
-Dir.glob("#{File.dirname(__FILE__)}/app/*.rb").sort.each do |file|
+Dir.glob("#{File.dirname(__FILE__)}/radiospieler/*.rb").sort.each do |file|
   load file
 end

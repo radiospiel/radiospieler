@@ -18,7 +18,8 @@ end
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
-require 'app'
+require 'radiospieler'
+require 'micro_sql'
 App.env = "test"
 
 App.logger.level = Logger::ERROR
