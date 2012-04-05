@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "radiospieler"
-  s.version = "0.3.1"
+  s.version = "0.3.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["radiospiel"]
@@ -36,7 +36,6 @@ Gem::Specification.new do |s|
     "lib/core-extensions/tls.rb",
     "lib/core-extensions/uids.rb",
     "lib/core-extensions/uri_ext.rb",
-    "lib/extensions/bitly.rb",
     "lib/extensions/http.rb",
     "lib/radiospieler.rb",
     "lib/radiospieler/radiospieler.rb",
@@ -48,13 +47,10 @@ Gem::Specification.new do |s|
     "script/watchr",
     "test/app_test.rb",
     "test/array_ext_test.rb",
-    "test/bitlify_test.rb",
     "test/cache_test.rb",
     "test/cgi_ext_test.rb",
     "test/config.yml",
     "test/config_test.rb",
-    "test/fixtures-vcr/bitly_limit_exceeded.yml",
-    "test/fixtures-vcr/bitly_ok.yml",
     "test/fixtures-vcr/http_test.yml",
     "test/hash_ext_test.rb",
     "test/http_test.rb",
