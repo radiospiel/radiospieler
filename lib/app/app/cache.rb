@@ -28,9 +28,6 @@ module App
     
     DEFAULT_MAX_AGE = 4 * 3600     # 4 hours.
 
-    attr :store, true
-    extend self
-    
     def self.clear
       store.flushdb
     end
@@ -68,24 +65,28 @@ module App
       Base64.encode64 Marshal.dump(value)
     end
     
-    def self.setup
-      cache_url = App.config[:cache] || begin
-        App.logger.warn "No :cache configuration, fallback to #{SqliteStore.db_path}"
-        SqliteStore.db_path
-      end
-      
-      uri = URI.parse(cache_url)
-
-      self.store = case uri.scheme
+    def self.store_from_url(url)
+      return unless url
+      uri = URI.parse(url)
+      case uri.scheme
       when "redis"
         require "redis"
-        Redis.connect(:url => cache_url)
+        Redis.connect(:url => url)
       when nil
-        SqliteStore.new
+        SimpleCache.new(uri.path)
       end
-    rescue LoadError
-      App.logger.warn "LoadError: #{$!}"
-      nil
+    end
+    
+    attr :store, true
+    extend self
+    
+    def self.store
+      @store ||= store_from_url(App.config[:cache]) || begin
+        name = "#{File.basename(App.root)}-#{App.root.uid64}"
+        store = SimpleCache.new(name)
+        App.logger.warn "No or invalid :cache configuration, fallback to #{store.path}"
+        store
+      end
     end
   end
 
@@ -93,5 +94,3 @@ module App
     Cache.cached(key, max_age, &block)
   end
 end
-
-App::Cache.setup
