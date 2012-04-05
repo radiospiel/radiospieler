@@ -1,77 +1,86 @@
 require_relative "config"
+require "simple_cache"
 
-#
-# This is a cache module, which keeps entries for a certain time period, 
-# stored away in a redis store.
+# This is a cache module, which keeps entries for a certain time period (or forever).
 #
 # Entries are packed via Marshal.
 module App
   module Cache
     DEFAULT_MAX_AGE = 4 * 3600     # 4 hours.
 
-    def self.clear
-      store.flushdb
-    end
-
-    def self.uid(key)
-      case key
-      when String, Hash then key.uid64
-      when Fixnum       then key
-      else
-        App.logger.warn "Don't know how to deal with non-uid key #{key}"
-        nil
-      end 
-    end
-    
-    def self.cached(key, max_age = DEFAULT_MAX_AGE, &block)
-      cache_id = uid(key)
-
-      return yield if !store || !max_age || !cache_id
-
-      if marshalled = store.get(cache_id)
-        unmarshal(marshalled)
-      else
-        yield.tap { |v| 
-          store.set(cache_id, marshal(v))
-          store.expire(cache_id, max_age)
-        }
-      end
-    end
-
-    def self.unmarshal(marshalled)
-      Marshal.load Base64.decode64(marshalled) if marshalled
-    end
-    
-    def self.marshal(value)
-      Base64.encode64 Marshal.dump(value)
-    end
-    
-    def self.store_from_url(url)
-      return unless url
-      uri = URI.parse(url)
-      case uri.scheme
-      when "redis"
-        require "redis"
-        Redis.connect(:url => url)
-      when nil
-        SimpleCache.new(uri.path)
-      end
-    end
-    
-    attr :store, true
-    extend self
-    
     def self.store
-      @store ||= store_from_url(App.config[:cache]) || begin
-        name = "#{File.basename(App.root)}-#{App.root.uid64}"
-        store = SimpleCache.new(name)
-        App.logger.warn "No or invalid :cache configuration, fallback to #{store.path}"
-        store
+      @store ||= Store.create(App.config[:cache]) || Store.fallback
+    end
+
+    def self.store=(store)
+      @store = store
+    end
+
+    def self.clear
+      store.clear
+    end
+    
+    module Store
+      def self.create(url)
+        return unless url
+        
+        uri = URI.parse(url)
+        case uri.scheme
+        when "redis"  then RedisStore.new(url)
+        when nil      then ::SimpleCache.new(uri.path)
+        end
+      end
+      
+      def self.fallback
+        name = "#{File.basename(App.root)}/a#{App.root.uid64}"
+        SimpleCache.new(name).tap do |store|
+          App.logger.warn "No, invalid, or unsupported :cache configuration, fallback to #{store.path}"
+        end
+      end
+    end
+
+    class Store::RedisStore
+      def initialize(url)
+        require "redis"
+        @redis = Redis.connect(:url => url)
+      end
+
+      include SimpleCache::Marshal
+      
+      def keys
+        @redis.keys
+      end
+      
+      def clear
+        @redis.flushdb
+        #debugger
+        1
+      end
+      
+      def store(key, value, max_age = DEFAULT_MAX_AGE)
+        cache_id = uid(key)
+        if value
+          @redis.set cache_id, marshal(value)
+          @redis.expire cache_id, max_age if max_age
+        else
+          @redis.del cache_id
+        end
+        value
+      end
+      
+      def fetch(key, &block)
+        marshalled = @redis.get(uid(key))
+        marshalled ? unmarshal(marshalled) : yield
       end
     end
   end
 
   def cached(key, max_age = Cache::DEFAULT_MAX_AGE, &block)
-    Cache.cached(key, max_age, &block)
+    return yield if !max_age
+
+    cache_store = Cache.store
+    cache_store.fetch(key) do
+      cache_store.store(key, yield, max_age)
+    end
   end
 end
