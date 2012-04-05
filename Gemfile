@@ -7,6 +7,7 @@ gem "pg"
 gem "sqlite3"
 gem "redis"
 gem "micro_sql"
+gem "simple_cache"
 gem "htmlentities"
 
 # Add dependencies to develop your gem here.
