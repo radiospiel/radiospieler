@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require 'helper'
+require_relative 'test_helper'
 
 class TlsTest < Test::Unit::TestCase
   thread_local_attribute :tester

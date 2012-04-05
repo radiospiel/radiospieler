@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require_relative './helper'
+require_relative './test_helper'
 require 'vcr'
 
 VCR.configure do |c|

@@ -1,4 +1,4 @@
-require 'helper'
+require_relative 'test_helper'
 
 class CacheTest < Test::Unit::TestCase
   def test_caching

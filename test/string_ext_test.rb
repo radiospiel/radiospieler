@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require 'helper'
+require_relative 'test_helper'
 
 class StringExtTest < Test::Unit::TestCase
   def test_html_decode

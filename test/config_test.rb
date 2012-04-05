@@ -1,4 +1,4 @@
-require 'helper'
+require_relative 'test_helper'
 
 class TestConfig < Test::Unit::TestCase
   def test_read_from_test_config

@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require 'helper'
+require_relative 'test_helper'
 
 class CgiExtTest < Test::Unit::TestCase
   def test_url_for

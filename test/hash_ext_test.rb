@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require 'helper'
+require_relative 'test_helper'
 
 class HashExtTest < Test::Unit::TestCase
   def test_stringify
