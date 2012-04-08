@@ -23,6 +23,7 @@
 #
 
 module WithoutAccents
+  if !defined?(ACCENTS_MAPPING)
   
   # The extended characters map used by removeaccents. The accented characters 
   # are coded here using their numerical equivalent to sidestep encoding issues.
@@ -57,6 +58,8 @@ module WithoutAccents
     [letter, regexp]
   end
   
+  end
+
   # Remove the accents from the string. Uses String::ACCENTS_MAPPING as the source map.
   def without_accents
     str = String.new(self)
