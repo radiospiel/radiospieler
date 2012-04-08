@@ -5,6 +5,8 @@ module App
     @logger
   end
 
+  if !defined?(INTENDATIONS)
+    
   INTENDATIONS = {
     "DEBUG" => '        ',
     "INFO"  => '      **',
@@ -12,6 +14,8 @@ module App
     "ERROR" => '  ******',
     "FATAL" => '********'
   }
+  
+  end
 
   def self.logger=(logger)
     logger.formatter = proc do |severity, datetime, progname, msg| 
