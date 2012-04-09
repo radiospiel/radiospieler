@@ -1,5 +1,5 @@
 default:
-  cache: redis://localhost:6379/0
+  no-cache: redis://localhost:6379/0
   bitly:
     user: "bitlyapidemo"
     key: "R_0da49e0a9118ff35f52f629d2d71bf07"
