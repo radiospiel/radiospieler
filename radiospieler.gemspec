@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "radiospieler"
-  s.version = "0.3.4"
+  s.version = "0.3.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["radiospiel"]
-  s.date = "2012-04-08"
+  s.date = "2012-04-09"
   s.description = "Some basics that your application could benefit from."
   s.email = "eno@open-lab.org"
   s.extra_rdoc_files = [
@@ -24,7 +24,6 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
-    "app.tmproj",
     "config/app.yml",
     "lib/core-extensions/array_ext.rb",
     "lib/core-extensions/benchmark-logger.rb",
@@ -39,15 +38,15 @@ Gem::Specification.new do |s|
     "lib/extensions/http.rb",
     "lib/radiospieler.rb",
     "lib/radiospieler/radiospieler.rb",
-    "lib/radiospieler/radiospieler/cache.rb",
     "lib/radiospieler/radiospieler/config.rb",
     "lib/radiospieler/radiospieler/logger.rb",
     "lib/radiospieler/radiospieler/root.rb",
+    "lib/radiospieler/radiospieler/zz_initialise.rb",
     "radiospieler.gemspec",
+    "radiospieler.tmproj",
     "script/watchr",
     "test/app_test.rb",
     "test/array_ext_test.rb",
-    "test/cache_test.rb",
     "test/cgi_ext_test.rb",
     "test/config.yml",
     "test/config_test.rb",
@@ -62,19 +61,15 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/radiospiel/radiospieler"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.17"
+  s.rubygems_version = "1.8.10"
   s.summary = "Application base code"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<pg>, [">= 0"])
-      s.add_runtime_dependency(%q<sqlite3>, [">= 0"])
-      s.add_runtime_dependency(%q<redis>, [">= 0"])
-      s.add_runtime_dependency(%q<micro_sql>, [">= 0"])
-      s.add_runtime_dependency(%q<simple_cache>, [">= 0"])
       s.add_runtime_dependency(%q<htmlentities>, [">= 0"])
+      s.add_runtime_dependency(%q<simple_cache_rs>, [">= 0"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<vcr>, [">= 0"])
@@ -83,12 +78,8 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<simplecov>, [">= 0"])
       s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
     else
-      s.add_dependency(%q<pg>, [">= 0"])
-      s.add_dependency(%q<sqlite3>, [">= 0"])
-      s.add_dependency(%q<redis>, [">= 0"])
-      s.add_dependency(%q<micro_sql>, [">= 0"])
-      s.add_dependency(%q<simple_cache>, [">= 0"])
       s.add_dependency(%q<htmlentities>, [">= 0"])
+      s.add_dependency(%q<simple_cache_rs>, [">= 0"])
       s.add_dependency(%q<bundler>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<vcr>, [">= 0"])
@@ -98,12 +89,8 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<ruby-debug19>, [">= 0"])
     end
   else
-    s.add_dependency(%q<pg>, [">= 0"])
-    s.add_dependency(%q<sqlite3>, [">= 0"])
-    s.add_dependency(%q<redis>, [">= 0"])
-    s.add_dependency(%q<micro_sql>, [">= 0"])
-    s.add_dependency(%q<simple_cache>, [">= 0"])
     s.add_dependency(%q<htmlentities>, [">= 0"])
+    s.add_dependency(%q<simple_cache_rs>, [">= 0"])
     s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<vcr>, [">= 0"])
