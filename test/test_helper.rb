@@ -19,11 +19,11 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
 require 'radiospieler'
-require 'micro_sql'
+# require 'micro_sql'
 App.env = "test"
 
 App.logger.level = Logger::ERROR
-MicroSql.logger = App.logger
+# MicroSql.logger = App.logger
 
 class Test::Unit::TestCase
 end

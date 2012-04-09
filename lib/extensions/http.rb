@@ -1,4 +1,5 @@
 require 'net/http'
+require 'simple_cache'
 
 # The Http module defines a 
 # 
@@ -24,7 +25,7 @@ module Http
   
   def get(url, max_age = MaxAge.for(url))
     App.logger.benchmark("[GET] #{url}", :minimum => 20) do 
-      App.cached(url, max_age) do 
+      SimpleCache.cached(url, max_age) do 
         App.logger.debug "[GET] #{url}"
         get_(url) 
       end
