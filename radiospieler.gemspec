@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "radiospieler"
-  s.version = "0.3.5"
+  s.version = "0.3.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["radiospiel"]
-  s.date = "2012-04-09"
+  s.date = "2012-04-14"
   s.description = "Some basics that your application could benefit from."
   s.email = "eno@open-lab.org"
   s.extra_rdoc_files = [
@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
     "lib/core-extensions/benchmark-logger.rb",
     "lib/core-extensions/cgi_ext.rb",
     "lib/core-extensions/hash_ext.rb",
+    "lib/core-extensions/impl_missing.rb",
     "lib/core-extensions/object_ext.rb",
     "lib/core-extensions/string_ext.rb",
     "lib/core-extensions/string_without_accents.rb",
@@ -53,6 +54,7 @@ Gem::Specification.new do |s|
     "test/fixtures-vcr/http_test.yml",
     "test/hash_ext_test.rb",
     "test/http_test.rb",
+    "test/impl_missing_test.rb",
     "test/string_ext_test.rb",
     "test/test_helper.rb",
     "test/tls_test.rb",
@@ -61,7 +63,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/radiospiel/radiospieler"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
+  s.rubygems_version = "1.8.17"
   s.summary = "Application base code"
 
   if s.respond_to? :specification_version then
