@@ -19,5 +19,6 @@ group :development do
   
   gem 'simplecov', :require => false
   gem "ruby-debug19"
+  gem "simple_cov"
 end
 
