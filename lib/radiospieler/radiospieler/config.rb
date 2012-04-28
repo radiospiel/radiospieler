@@ -12,7 +12,7 @@ module App
 
     def self.read(path)
       return unless File.exist?(path)
-      App.logger.info "Reading configuration from #{path}"
+      App.logger.info "Reading '#{App.env}' configuration from #{path}"
       erb = File.read(path)
       yaml = ERB.new(erb).result(binding)
       YAML.load(yaml) || {}
