@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "radiospieler"
-  s.version = "0.3.7"
+  s.version = "0.3.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["radiospiel"]
-  s.date = "2012-04-28"
+  s.date = "2012-05-03"
   s.description = "Some basics that your application could benefit from."
   s.email = "eno@open-lab.org"
   s.extra_rdoc_files = [
@@ -58,12 +58,13 @@ Gem::Specification.new do |s|
     "test/string_ext_test.rb",
     "test/test_helper.rb",
     "test/tls_test.rb",
-    "test/uid_test.rb"
+    "test/uid_test.rb",
+    "test/uri_test.rb"
   ]
   s.homepage = "http://github.com/radiospiel/radiospieler"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.17"
+  s.rubygems_version = "1.8.10"
   s.summary = "Application base code"
 
   if s.respond_to? :specification_version then
@@ -72,6 +73,7 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<htmlentities>, [">= 0"])
       s.add_runtime_dependency(%q<simple_cache_rs>, [">= 0"])
+      s.add_runtime_dependency(%q<nokogiri>, [">= 0"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<vcr>, [">= 0"])
@@ -83,6 +85,7 @@ Gem::Specification.new do |s|
     else
       s.add_dependency(%q<htmlentities>, [">= 0"])
       s.add_dependency(%q<simple_cache_rs>, [">= 0"])
+      s.add_dependency(%q<nokogiri>, [">= 0"])
       s.add_dependency(%q<bundler>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<vcr>, [">= 0"])
@@ -95,6 +98,7 @@ Gem::Specification.new do |s|
   else
     s.add_dependency(%q<htmlentities>, [">= 0"])
     s.add_dependency(%q<simple_cache_rs>, [">= 0"])
+    s.add_dependency(%q<nokogiri>, [">= 0"])
     s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<vcr>, [">= 0"])
