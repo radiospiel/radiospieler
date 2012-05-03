@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "radiospieler"
-  s.version = "0.3.6"
+  s.version = "0.3.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["radiospiel"]
-  s.date = "2012-04-14"
+  s.date = "2012-04-28"
   s.description = "Some basics that your application could benefit from."
   s.email = "eno@open-lab.org"
   s.extra_rdoc_files = [
@@ -79,6 +79,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<psych>, [">= 0"])
       s.add_development_dependency(%q<simplecov>, [">= 0"])
       s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
+      s.add_development_dependency(%q<simple_cov>, [">= 0"])
     else
       s.add_dependency(%q<htmlentities>, [">= 0"])
       s.add_dependency(%q<simple_cache_rs>, [">= 0"])
@@ -89,6 +90,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<psych>, [">= 0"])
       s.add_dependency(%q<simplecov>, [">= 0"])
       s.add_dependency(%q<ruby-debug19>, [">= 0"])
+      s.add_dependency(%q<simple_cov>, [">= 0"])
     end
   else
     s.add_dependency(%q<htmlentities>, [">= 0"])
@@ -100,6 +102,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<psych>, [">= 0"])
     s.add_dependency(%q<simplecov>, [">= 0"])
     s.add_dependency(%q<ruby-debug19>, [">= 0"])
+    s.add_dependency(%q<simple_cov>, [">= 0"])
   end
 end
 
