@@ -9,10 +9,19 @@ VCR.configure do |c|
 end
 
 class HttpTest < Test::Unit::TestCase
-  def test_get
-   VCR.use_cassette('http_test') do
+  def test_get_with_redirection
+    VCR.use_cassette('http_test') do
       google = Http.get("http://google.de")
       assert google.starts_with?("<!doctype html>")
-   end
+    end
+  end
+
+  def test_get_body_and_headers
+    VCR.use_cassette('http_test') do
+      body, headers = Http.get_body_and_headers("http://google.de", 0)
+      assert body.starts_with?("<!doctype html>")
+      assert_equal ["text/html; charset=ISO-8859-1"], headers["content-type"]
+      assert_equal "UTF-8", body.encoding.name
+    end
   end
 end

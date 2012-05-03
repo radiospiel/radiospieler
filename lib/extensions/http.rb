@@ -1,5 +1,6 @@
 require 'net/http'
 require 'simple_cache'
+require 'nokogiri'
 
 # The Http module defines a 
 # 
@@ -23,18 +24,25 @@ module Http
     end
   end
   
-  def get(url, max_age = MaxAge.for(url))
+  def get(url, max_age = nil)
+    body, headers = get_body_and_headers(url, max_age)
+    body
+  end
+
+  def get_body_and_headers(url, max_age = nil)
+    max_age ||= MaxAge.for(url)
+
     App.logger.benchmark("[GET] #{url}", :minimum => 20) do 
-      SimpleCache.cached(url, max_age) do 
+      SimpleCache.cached("f-#{url}", max_age) do 
         App.logger.debug "[GET] #{url}"
-        get_(url) 
+        get_body_and_headers_(url) 
       end
     end
   end
 
   private
   
-  def get_(uri_str, limit = 10)
+  def get_body_and_headers_(uri_str, limit = 10)
     raise 'too many redirections' if limit == 0
 
     uri = URI.parse(uri_str)
@@ -49,13 +57,45 @@ module Http
 
     case response
     when Net::HTTPSuccess then
-      response.body
+      body, headers = response.body, response.to_hash
+      [ reencode(body, response["Content-Type"]), headers ]
     when Net::HTTPRedirection then
       location = response['location']
       App.logger.debug "redirected to #{location}"
-      get_(location, limit - 1)
+      get_body_and_headers_(location, limit - 1)
     else  
-      response.value
+      [ response.value, nil ]
     end
+  end
+
+  def reencode(body, content_type)
+    encodings = [ "ISO-8859-1", "UTF-8" ]
+
+    encodings.unshift($1)                   if content_type =~ /; charset=(\S+)/
+    encodings.unshift(html_encoding(body))  if content_type =~ /html/
+
+    force_valid_encoding body, *encodings
+  end
+
+  def force_valid_encoding(string, *encodings)
+    encodings.each do |enc|
+      next unless enc
+      begin
+        s = string.force_encoding(enc)
+        next unless s.valid_encoding?
+        return s.encode("UTF-8")
+      rescue Encoding::UndefinedConversionError
+      end
+    end
+
+    nil
+  end
+  
+  def html_encoding(html)
+    doc = Nokogiri.HTML(html)
+    node = doc.css("meta[http-equiv='Content-Type']").first
+
+    return unless node &&  node["content"] =~ /; charset=(\S+)/
+    $1
   end
 end
