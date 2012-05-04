@@ -24,4 +24,12 @@ class HttpTest < Test::Unit::TestCase
       assert_equal "UTF-8", body.encoding.name
     end
   end
+
+  def test_xml_url
+    VCR.use_cassette('http_test', :record => :new_episodes) do
+      body, headers = Http.get_body_and_headers("http://nowhere.test/9162.xml", 0)
+      assert body =~ /Tänzerin/, "Encoding should accept UTF-8 umlauts"
+      assert_equal "UTF-8", body.encoding.name
+    end
+  end
 end
