@@ -26,6 +26,11 @@ module Http
   
   def get(url, max_age = nil)
     body, headers = get_body_and_headers(url, max_age)
+    reencode body, (headers["content-type"] || []).join(";")
+  end
+
+  def get_binary(url, max_age = nil)
+    body, headers = get_body_and_headers(url, max_age)
     body
   end
 
@@ -57,8 +62,7 @@ module Http
 
     case response
     when Net::HTTPSuccess then
-      body, headers = response.body, response.to_hash
-      [ reencode(body, response["Content-Type"]), headers ]
+      [ response.body, response.to_hash ]
     when Net::HTTPRedirection then
       location = response['location']
       App.logger.debug "redirected to #{location}"
