@@ -73,6 +73,7 @@ module Http
 
     encodings.unshift($1)                   if content_type =~ /; charset=(\S+)/
     encodings.unshift(html_encoding(body))  if content_type =~ /html/
+    encodings.unshift(xml_encoding(body))   if content_type =~ /xml/
 
     force_valid_encoding body, *encodings
   end
@@ -97,5 +98,9 @@ module Http
 
     return unless node &&  node["content"] =~ /; charset=(\S+)/
     $1
+  end
+  
+  def xml_encoding(xml)
+    Nokogiri.XML(xml).encoding
   end
 end
