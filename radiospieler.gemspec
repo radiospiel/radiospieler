@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "radiospieler"
-  s.version = "0.3.10"
+  s.version = "0.3.11"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["radiospiel"]
-  s.date = "2012-05-04"
+  s.date = "2012-05-08"
   s.description = "Some basics that your application could benefit from."
   s.email = "eno@open-lab.org"
   s.extra_rdoc_files = [
@@ -64,7 +64,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/radiospiel/radiospieler"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
+  s.rubygems_version = "1.8.17"
   s.summary = "Application base code"
 
   if s.respond_to? :specification_version then
