@@ -38,4 +38,11 @@ class HttpTest < Test::Unit::TestCase
       assert_equal "ASCII-8BIT", body.encoding.name
     end
   end
+
+  def test_get_charset_from_header
+    VCR.use_cassette('http_test', :record => :new_episodes) do
+      body = Http.get("http://www.livegigs.de/berlin/termine-babylon_mitte-14264", 0)
+      assert(body =~ /präsentiert/)
+    end
+  end
 end

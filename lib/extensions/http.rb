@@ -75,7 +75,7 @@ module Http
   def reencode(body, content_type)
     encodings = [ "ISO-8859-1", "UTF-8" ]
 
-    encodings.unshift($1)                   if content_type =~ /; charset=(\S+)/
+    encodings.unshift($1)                   if content_type =~ /;\s*charset=(\S+)/
     encodings.unshift(html_encoding(body))  if content_type =~ /html/
     encodings.unshift(xml_encoding(body))   if content_type =~ /xml/
 
