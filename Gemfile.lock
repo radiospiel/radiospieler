@@ -48,6 +48,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable
   bundler
   htmlentities
   jeweler

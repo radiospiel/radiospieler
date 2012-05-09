@@ -45,4 +45,11 @@ class HttpTest < Test::Unit::TestCase
       assert(body =~ /präsentiert/)
     end
   end
+
+  def test_uses_iri
+    VCR.use_cassette('http_test', :record => :new_episodes) do
+      body = Http.get("http://www.livegigs.de/berlin/termine-die_wühlmäuse_am_theo-27150", 0)
+      assert(body =~ /präsentiert/)
+    end
+  end
 end

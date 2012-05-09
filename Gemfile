@@ -6,6 +6,7 @@ source "http://rubygems.org"
 gem "htmlentities"
 gem "simple_cache_rs"
 gem "nokogiri"
+gem "addressable"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.

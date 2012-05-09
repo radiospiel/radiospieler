@@ -1,3 +1,4 @@
+require 'addressable/uri'
 require 'net/http'
 require 'simple_cache'
 require 'nokogiri'
@@ -50,7 +51,7 @@ module Http
   def get_body_and_headers_(uri_str, limit = 10)
     raise 'too many redirections' if limit == 0
 
-    uri = URI.parse(uri_str)
+    uri =  Addressable::URI.parse(uri_str)
     
     http = Net::HTTP.new(uri.host, uri.port)
     if uri.scheme == "https"
