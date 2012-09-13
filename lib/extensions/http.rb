@@ -13,6 +13,8 @@ module Http
 
   # the default expiration time for get requests.
   module MaxAge
+    DEFAULT_MAX_AGE = 86_400
+    
     def self.config
       @config ||= (App.config["cache-max-age"] || {}).to_a
     end
@@ -21,7 +23,8 @@ module Http
       config.each do |pattern, max_age|
         return max_age if url.index(pattern)
       end
-      nil
+      
+      DEFAULT_MAX_AGE
     end
   end
   
