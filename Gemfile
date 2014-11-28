@@ -1,4 +1,4 @@
-source "http://rubygems.org"
+source "https://rubygems.org"
 
 # Add dependencies required to use your gem here.
 # Example:
@@ -21,7 +21,7 @@ group :development, :test do
   gem "psych"
   
   gem 'simplecov', :require => false
-  gem "ruby-debug19"
-  gem "simple_cov"
+  # gem "ruby-debug19"
+  # gem "simple_cov"
   gem "test-unit"
 end

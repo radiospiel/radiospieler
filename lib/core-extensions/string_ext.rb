@@ -16,18 +16,18 @@ end
 
 # -- convert to UTF8 ----------------------------------------------------------
 
-require 'iconv'
-class String
-  def to_utf8
-    # require "charguess"
-    # encoding = CharGuess.guess(self)
-    # puts "encoding: #{encoding.inspect}"
-    # return self if !encoding || encoding == "UTF-8"
-
-    encoding = 'ISO-8859-1'
-    Iconv.conv('utf-8', encoding, self)
-  end
-end
+# require 'iconv'
+# class String
+#   def to_utf8
+#     # require "charguess"
+#     # encoding = CharGuess.guess(self)
+#     # puts "encoding: #{encoding.inspect}"
+#     # return self if !encoding || encoding == "UTF-8"
+#
+#     encoding = 'ISO-8859-1'
+#     Iconv.conv('utf-8', encoding, self)
+#   end
+# end
 
 # -- remove accents -----------------------------------------------------------
 
