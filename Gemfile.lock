@@ -15,6 +15,7 @@ GEM
     power_assert (0.2.2)
     psych (2.0.6)
     rake (10.4.0)
+    rdoc (4.1.0)
     redis (3.1.0)
     redis-namespace (1.5.1)
       redis (~> 3.0, >= 3.0.4)
@@ -46,6 +47,7 @@ DEPENDENCIES
   nokogiri
   psych
   rake
+  rdoc
   simple_cache_rs
   simplecov
   test-unit

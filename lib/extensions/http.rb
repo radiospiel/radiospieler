@@ -29,22 +29,27 @@ module Http
   end
   
   def get(url, max_age = nil)
-    body, headers = get_body_and_headers(url, max_age)
-    reencode body, (headers["content-type"] || []).join(";")
+    get_body(url, max_age, :text)
   end
 
   def get_binary(url, max_age = nil)
-    body, headers = get_body_and_headers(url, max_age)
-    body
+    get_body(url, max_age, :binary)
   end
 
-  def get_body_and_headers(url, max_age = nil)
+  def get_body(url, max_age, mode)
     max_age ||= MaxAge.for(url)
 
     App.logger.benchmark("[GET] #{url}", :minimum => 20) do 
-      SimpleCache.cached("f-#{url}", max_age) do 
+      SimpleCache.cached("g-#{url}", max_age) do 
         App.logger.debug "[GET] #{url}"
-        get_body_and_headers_(url) 
+        body, headers = get_body_and_headers_(url) 
+
+        if mode == :text
+          content_types = (headers["content-type"] || []).join(";")
+          body = reencode body, content_types
+        end
+        
+        body
       end
     end
   end
